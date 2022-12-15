@@ -4,12 +4,17 @@
     <span class="spacer"></span>
     <button mat-flat-button color="accent">Add Employee</button>
 
+
     <form class="example-form">
-      <mat-form-field>
-        <mat-label>Search employees</mat-label>
-        <input type="text" matInput placeholder="Ex. 1">
-      </mat-form-field>
+      
+        <mat-form-field >
+          <mat-label>Search employees</mat-label>
+          <input type="text" matInput placeholder="Ex. 1">
+        </mat-form-field>
+     
     </form>
+
+
 
   </mat-toolbar>
 </p>
@@ -20,7 +25,7 @@
     <div *ngFor="let emp of employees">
 
       <mat-grid-tile>
-        <mat-card class="card-style" tabindex="0">
+        <mat-card class="card-style" tabindex="0" div="emp.id">
           <mat-card-header>
             <img mat-card-avatar class="header-image" [src]="emp.imageUrl" />
             <mat-card-title>{{emp?.name}}</mat-card-title>
@@ -45,8 +50,8 @@
             </mat-list>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-raised-button color="primary">Edit</button>
-            <button mat-raised-button color="warning">Delete</button>
+            <button  mat-raised-button color="primary">Edit</button>
+            <button (click)="openDeleteDialog(emp.id, emp.name)" mat-raised-button color="warning">Delete</button>
           </mat-card-actions>
 
 
