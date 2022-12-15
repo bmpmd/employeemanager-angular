@@ -38,6 +38,20 @@ export class AppComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`delete dialog result: ${result}`);
       //i think here based on the result we do the API call here 
+
+      //if result reutnrs true then we delete the emp 
+      if (result) {
+        console.log(`going to delete emp with id: ${empid}`)
+        this.employeeService.deleteEmployee(empid).subscribe(
+          (response: void) => {
+            console.log(response);
+            this.getEmployees();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
     })
   }
 
@@ -61,6 +75,7 @@ export class AppComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`add dialog result: ${result}`);
       //i think here based on the result we do the API call here 
+      
     })
   }
 
