@@ -2,7 +2,7 @@
   <mat-toolbar color="primary">
     <span>Employee Manager Dashboard</span>
     <span class="spacer"></span>
-    <button mat-flat-button color="accent">Add Employee</button>
+    <button (click)="openAddDialog()" mat-flat-button color="accent">Add Employee</button>
 
 
     <form class="example-form">
@@ -50,7 +50,7 @@
             </mat-list>
           </mat-card-content>
           <mat-card-actions>
-            <button  mat-raised-button color="primary">Edit</button>
+            <button  (click)="openEditDialog(emp)" mat-raised-button color="primary">Edit</button>
             <button (click)="openDeleteDialog(emp.id, emp.name)" mat-raised-button color="warning">Delete</button>
           </mat-card-actions>
 
