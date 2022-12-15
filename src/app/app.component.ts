@@ -4,11 +4,17 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Employee } from './model/employee';
 import { EmployeeService } from './service/employee.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroupDirective, FormGroup, NgForm } from '@angular/forms';
+
 
 export interface DeleteDialogData {
   id: number,
   name: string
+}
+
+export interface AddData {
+  id: number,
+
 }
 
 
@@ -24,6 +30,7 @@ export interface DeleteDialogData {
 
 export class AppComponent implements OnInit {
   title = 'employeemanager-angular';
+
 
 
   //place to hold employees list all the time 
@@ -75,7 +82,7 @@ export class AppComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`add dialog result: ${result}`);
       //i think here based on the result we do the API call here 
-      
+
     })
   }
 
@@ -122,7 +129,7 @@ export class DeleteDialog {
   templateUrl: 'edit-dialog.html',
 })
 export class EditDialog {
-
+  public emp: Employee;
   email = new FormControl('', [Validators.required, Validators.email]);
 
   getErrorMessage() {
@@ -137,10 +144,41 @@ export class EditDialog {
   constructor(
     public dialogRef: MatDialogRef<EditDialog>,
     @Inject(MAT_DIALOG_DATA) public data: Employee,
-  ) { }
+    private employeeService: EmployeeService,
+  ) { this.emp = new Employee(0, "", "", "", "", "", "",); }
 
+  name = new FormControl('');
+  jobTitle = new FormControl('')
+  phone = new FormControl('')
+  imageUrl = new FormControl('')
+
+  
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+
+  
+  onSubmit() {
+
+
+    this.emp.name = this.name.value || "";
+    this.emp.email = this.email.value || '';
+    this.emp.phone = this.phone.value || '';
+    this.emp.jobTitle = this.jobTitle.value || '';
+    this.emp.imageUrl = this.imageUrl.value || '';
+
+
+
+
+    //formed emp, now send it :3 
+
+    this.employeeService.addEmployee(this.emp).subscribe(
+      (response: Employee) => {
+        console.log(response);
+        location.reload();
+      }
+    )
   }
 }
 
@@ -149,13 +187,54 @@ export class EditDialog {
   templateUrl: 'add-dialog.html',
 })
 export class AddDialog {
+
+  public emp: Employee;
   constructor(
     public dialogRef: MatDialogRef<AddDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-  ) { }
+    private employeeService: EmployeeService,
+
+  ) {
+    this.emp = new Employee(0, "", "", "", "", "", "",);
+
+
+  }
+
+
+  name = new FormControl('');
+  jobTitle = new FormControl('')
+  email = new FormControl('')
+  phone = new FormControl('')
+  imageUrl = new FormControl('')
+
+
+
 
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  onSubmit() {
+
+
+    this.emp.name = this.name.value || "";
+    this.emp.email = this.email.value || '';
+    this.emp.phone = this.phone.value || '';
+    this.emp.jobTitle = this.jobTitle.value || '';
+    this.emp.imageUrl = this.imageUrl.value || '';
+
+
+
+
+    //formed emp, now send it :3 
+
+    this.employeeService.addEmployee(this.emp).subscribe(
+      (response: Employee) => {
+        console.log(response);
+        location.reload();
+      }
+    )
+  }
+
 }
 

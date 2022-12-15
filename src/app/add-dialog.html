@@ -1,37 +1,43 @@
-<h2 mat-dialog-title>Edit Employee</h2>
+<h2 mat-dialog-title>Edit Employee</h2> 
+
 <mat-dialog-content class="mat-typography">
-    <mat-form-field appearance="fill">
-        <mat-label>Name</mat-label>
-        <input matInput >
-    </mat-form-field>
-    <br><mat-form-field>
-        <mat-label>Job Title</mat-label>
-        <input matInput >
-    </mat-form-field>
 
-    <br>
-    <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput required >
-    </mat-form-field>
-    <br>
 
+   
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput [formControl]="name">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Job Title</mat-label>
+            <input matInput [formControl]="jobTitle">
+        </mat-form-field>
+
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput required [formControl]="email">
+        </mat-form-field>
+        <br>
+
+
+        <mat-form-field>
+            <mat-label>phone number</mat-label>
+            <input matInput [formControl]="phone">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>image url</mat-label>
+            <input matInput [formControl]="imageUrl">
+        </mat-form-field>
     
-    <mat-form-field>
-        <mat-label>phone number</mat-label>
-        <input matInput >
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-        <mat-label>image url</mat-label>
-        <input matInput >
-    </mat-form-field>
-
-
 
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="false" mat-dialog-close>Cancel</button>
-    <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Add</button>
+    <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit()">Add</button>
 </mat-dialog-actions>
