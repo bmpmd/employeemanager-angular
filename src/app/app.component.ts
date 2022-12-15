@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
 
   openEditDialog(emp: Employee) {
     const dialogRef = this.dialog.open(EditDialog, {
-      data: { name: emp.name, id: emp.id, email: emp.email, jobTitle: emp.jobTitle, phone: emp.phone, imageUrl: emp.imageUrl }
+      data: { name: emp.name, id: emp.id, email: emp.email, jobTitle: emp.jobTitle, phone: emp.phone, imageUrl: emp.imageUrl, employeeCode: emp.employeeCode }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -130,28 +130,46 @@ export class DeleteDialog {
 })
 export class EditDialog {
   public emp: Employee;
-  email = new FormControl('', [Validators.required, Validators.email]);
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    return this.email.hasError('email') ? 'Not a valid email' : '';
-  }
+  //email = new FormControl('', [Validators.required, Validators.email]);
+  email = "";
 
 
   constructor(
     public dialogRef: MatDialogRef<EditDialog>,
     @Inject(MAT_DIALOG_DATA) public data: Employee,
     private employeeService: EmployeeService,
-  ) { this.emp = new Employee(0, "", "", "", "", "", "",); }
+  ) { this.emp = data}
 
-  name = new FormControl('');
-  jobTitle = new FormControl('')
-  phone = new FormControl('')
-  imageUrl = new FormControl('')
 
+  changeName(ev: any) {
+    this.emp.name = ev.target.value;
+    
+  }
+
+  changeTitle(ev: any) {
+    this.emp.jobTitle = ev.target.value;
+    
+  }
+
+  changeEmail(ev: any) {
+    this.emp.email = ev.target.value;
+    
+  }
+
+  changePhone(ev: any) {
+    this.emp.phone = ev.target.value;
+    
+  }
+
+  changeImageUrl(ev: any) {
+    this.emp.imageUrl = ev.target.value;
+    
+  }
+
+
+
+  
   
   onNoClick(): void {
     this.dialogRef.close();
@@ -161,19 +179,9 @@ export class EditDialog {
   
   onSubmit() {
 
+    //formed emp, now edit it :3 
 
-    this.emp.name = this.name.value || "";
-    this.emp.email = this.email.value || '';
-    this.emp.phone = this.phone.value || '';
-    this.emp.jobTitle = this.jobTitle.value || '';
-    this.emp.imageUrl = this.imageUrl.value || '';
-
-
-
-
-    //formed emp, now send it :3 
-
-    this.employeeService.addEmployee(this.emp).subscribe(
+    this.employeeService.updateEmployee(this.emp).subscribe(
       (response: Employee) => {
         console.log(response);
         location.reload();

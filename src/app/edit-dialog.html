@@ -2,30 +2,30 @@
 <mat-dialog-content class="mat-typography">
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput [value]="data.name" [formControl]="name">
+        <input matInput  [value]="data.name" (change)="changeName($event)">
     </mat-form-field>
     <br><mat-form-field>
         <mat-label>Job Title</mat-label>
-        <input matInput [value]="data.jobTitle">
+        <input matInput [value]="data.jobTitle" (change)="changeTitle($event)">
     </mat-form-field>
 
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput required [value]="data.email" [formControl]="email">
-        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        <input matInput required [value]="data.email" (change)="changeEmail($event)">
+        
     </mat-form-field>
     <br>
 
     
     <mat-form-field>
         <mat-label>phone number</mat-label>
-        <input matInput [value]="data.phone" [formControl]="phone">
+        <input matInput [value]="data.phone" (change)="changePhone($event)" >
     </mat-form-field>
     <br>
     <mat-form-field>
         <mat-label>image url</mat-label>
-        <input matInput [value]="data.imageUrl" [formControl]="imageUrl">
+        <input matInput [value]="data.imageUrl" (change)="changeImageUrl($event)">
     </mat-form-field>
 
 
@@ -34,5 +34,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="false" mat-dialog-close>Cancel</button>
-    <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Update</button>
+    <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit()">Update</button>
 </mat-dialog-actions>
