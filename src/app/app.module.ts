@@ -1,5 +1,5 @@
 
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -22,6 +22,32 @@ import { AddDialog, NavComponent } from './nav/nav.component';
 import { DisplayComponent } from './display/display.component';
 import { DeleteDialog } from './display/display.component';
 import { EditDialog } from './display/display.component';
+import { AppRoutingModule } from './app-routing.module';
+import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component'
+
+
+import {
+  OKTA_CONFIG,
+  OktaAuthModule
+} from '@okta/okta-angular';
+import { Router } from '@angular/router';
+import myAppConfig from './config/my-app-config';
+import { OktaAuth } from '@okta/okta-auth-js';
+
+function onAuthRequired(oktaAuth: OktaAuth, injector: Injector) {
+  // Use injector to access any service available within your application
+
+  
+  const router = injector.get(Router);
+
+  // Redirect the user to your custom login page
+  router.navigate(['/login']);
+}
+
+const oktaAuth = new OktaAuth(myAppConfig.oidc);
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +56,8 @@ import { EditDialog } from './display/display.component';
     NavComponent,
     DisplayComponent,
     EditDialog,
+    LoginComponent,
+    
     
 
   ],
@@ -51,11 +79,21 @@ import { EditDialog } from './display/display.component';
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
+    AppRoutingModule,
+    OktaAuthModule, 
 
 
 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: OKTA_CONFIG,
+      useValue: {
+        oktaAuth,
+        onAuthRequired
+      }
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

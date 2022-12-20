@@ -1,6 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { OKTA_AUTH } from '@okta/okta-angular';
+import OktaAuth from '@okta/okta-auth-js';
 import { Employee } from '../model/employee';
 import { EmployeeService } from '../service/employee.service';
 
@@ -9,9 +11,26 @@ import { EmployeeService } from '../service/employee.service';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent {
+export class NavComponent implements OnInit {
 
-  constructor(private employeeService: EmployeeService, public dialog: MatDialog) { }
+  //get access to  okta state. returns boolean 
+  isAuth: boolean = false;
+
+  constructor(private employeeService: EmployeeService,
+    public dialog: MatDialog,
+    @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) {
+    this.oktaAuth.authStateManager.subscribe((authState) => {
+      //return state if found or return false if not found 
+      this.isAuth = authState.isAuthenticated || false;
+    });
+  }
+ 
+  async ngOnInit() {
+    this.isAuth = await this.oktaAuth.isAuthenticated()
+  }
+  logout() {
+    this.oktaAuth.signOut();
+  }
 
   openAddDialog() {
     const dialogRef = this.dialog.open(AddDialog);

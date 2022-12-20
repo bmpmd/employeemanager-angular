@@ -2,10 +2,12 @@
     <mat-toolbar color="primary">
       <span>Employee Manager Dashboard</span>
       <span class="spacer"></span>
-      <button (click)="openAddDialog()" mat-flat-button color="accent">Add Employee</button>
+      
+      <button *ngIf="isAuth" (click)="logout()" mat-flat-button color="accent">logout</button>
+      <button *ngIf="isAuth" (click)="openAddDialog()" mat-flat-button color="accent">Add Employee</button>
+      
   
-  
-      <form class="example-form">
+      <form class="example-form" *ngIf="isAuth">
         
           <mat-form-field >
             <mat-label>Search employees</mat-label>
