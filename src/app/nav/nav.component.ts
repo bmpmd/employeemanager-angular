@@ -3,6 +3,8 @@ import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OKTA_AUTH } from '@okta/okta-angular';
 import OktaAuth from '@okta/okta-auth-js';
+import { environment } from 'src/environments/environment';
+
 import { Employee } from '../model/employee';
 import { EmployeeService } from '../service/employee.service';
 
@@ -15,7 +17,6 @@ export class NavComponent implements OnInit {
 
   //get access to  okta state. returns boolean 
   isAuth: boolean = false;
-
   constructor(private employeeService: EmployeeService,
     public dialog: MatDialog,
     @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) {
@@ -50,6 +51,7 @@ export class NavComponent implements OnInit {
   templateUrl: 'add-dialog.html',
 })
 export class AddDialog {
+  private apiServerUrl = environment.apiBaseUrl;
 
   public emp: Employee;
   constructor(
@@ -94,7 +96,11 @@ export class AddDialog {
     this.employeeService.addEmployee(this.emp).subscribe(
       (response: Employee) => {
         console.log(response);
-        location.reload();
+        //reloading causes issue
+        //do a redirect instead of a refresh page... 
+
+        //window.location.replace()
+        window.location.assign(window.location.origin)
       }
     )
   }
