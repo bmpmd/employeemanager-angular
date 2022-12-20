@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
-import { AppComponent, DeleteDialog, EditDialog} from './app.component';
+import { AppComponent} from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCommonModule } from '@angular/material/core';
@@ -19,14 +19,19 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AddDialog, NavComponent } from './nav/nav.component';
-
+import { DisplayComponent } from './display/display.component';
+import { DeleteDialog } from './display/display.component';
+import { EditDialog } from './display/display.component';
 @NgModule({
   declarations: [
     AppComponent,
     DeleteDialog,
-    EditDialog,
     AddDialog,
-    NavComponent
+    NavComponent,
+    DisplayComponent,
+    EditDialog,
+    
+
   ],
   imports: [
     BrowserModule,
