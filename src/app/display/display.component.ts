@@ -163,7 +163,11 @@ export class EditDialog {
     this.employeeService.updateEmployee(this.emp).subscribe(
       (response: Employee) => {
         console.log(response);
-        location.reload();
+        //reloading causes issue
+        //do a redirect instead of a refresh page... 
+
+        //window.location.replace()
+        window.location.assign(window.location.origin)
       }
     )
   }
