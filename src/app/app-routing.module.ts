@@ -12,7 +12,7 @@ const routes: Routes = [
  {path: 'login', component: LoginComponent},
  {path: 'login/callback', component: OktaCallbackComponent}, 
  {path: 'display', component: DisplayComponent, canActivate: [OktaAuthGuard]},
- {path: '', redirectTo:'display', pathMatch: 'full'},
+ {path: '', redirectTo:'login', pathMatch: 'full'},
 
 ];
 
